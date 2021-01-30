@@ -54,15 +54,15 @@
                 <div>
                     <label for="">First Class ($150/Ticket)</label>
                     <h5>
-                        <input id="mobile-amount" class="inp-style inp-width" type="text" name="" value="0">
+                        <input id="FirstClass-amount" class="inp-style inp-width" type="text" name="" value= "0" >
                     </h5>
                 </div>
-                <h5 id="mobile-unit-price">$0</h5>
+                <h5 id="FirstClass-unit-price">$0</h5>
                 
                 <div class="plus-minus-btn">
-                    <button onclick="handleProductChange('mobile', true)" class="btn btn-default"><i
+                    <button onclick="handleTicketChange('FirstClass', true)" class="btn btn-default"><i
                         class="fas fa-plus"></i></button>
-                <button onclick="handleProductChange('mobile', false)" class="btn btn-default"><i
+                <button onclick="handleTicketChange('FirstClass', false)" class="btn btn-default"><i
                         class="fas fa-minus"></i></button>
                 </div>
             </div>
@@ -71,14 +71,14 @@
                 <div>
                     <label for="">Economy ($100/Ticket)</label>
                     <h5>
-                        <input id="case-amount" class="inp-style inp-width" type="text" name="" value="0">
+                        <input id="Economy-amount" class="inp-style inp-width" type="text" name="" value= "0" >
                     </h5>
                 </div>
-                <h5 id="case-unit-price">$0</h5>
+                <h5 id="Economy-unit-price">$0</h5>
                 <div class="plus-minus-btn">
-                     <button onclick="handleProductChange('case', true)" class="btn btn-default"><i
+                     <button onclick="handleTicketChange('Economy', true)" class="btn btn-default"><i
                                 class="fas fa-plus"></i></button>
-                        <button onclick="handleProductChange('case', false)" class="btn btn-default"><i
+                        <button onclick="handleTicketChange('Economy', false)" class="btn btn-default"><i
                                 class="fas fa-minus"></i></button>
                     
                 </div>
@@ -111,7 +111,7 @@
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button  class="btn-style">Book Now</button>
         </div>
 
         <div class="booking-content">
@@ -121,51 +121,56 @@
                 voluptatibus quam</p>
         </div>
         </section>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
             // 2nd evolve by merging 1st evolve of FUNCTIONS
-            function handleProductChange(product, Increasing) {
-                const productAmount = document.getElementById(product + "-amount");
-                const productCount = parseInt(productAmount.value);
+            function handleTicketChange(Ticket, Increasing) {
+                const TicketAmount = document.getElementById(Ticket + "-amount");
+                const TicketCount = parseInt(TicketAmount.value);
                 
-                let productNewAmount = productCount;
+                let TicketNewAmount = TicketCount;
                 if (Increasing == true) {
-                    productNewAmount = productCount + 1;
+                    TicketNewAmount = TicketCount + 1;
                 }
-                if (Increasing == false && productNewAmount > 0) {
-                    productNewAmount = productCount - 1;
+                if (Increasing == false && TicketNewAmount > 0) {
+                    TicketNewAmount = TicketCount - 1;
                 }
-                productAmount.value = productNewAmount;
+                TicketAmount.value = TicketNewAmount;
                 
-                let productNewPrice = 0;
-                if (product == 'mobile') {
-                    productNewPrice = productNewAmount * 150;
+                let TicketNewPrice = 0;
+                if (Ticket == 'FirstClass') {
+                    TicketNewPrice = TicketNewAmount * 150;
                 }
-                if (product == 'case') {
-                    productNewPrice = productNewAmount * 100;
+                if (Ticket == 'Economy') {
+                    TicketNewPrice =TicketNewAmount * 100;
                 }
-                document.getElementById(product + "-unit-price").innerText = '$' + productNewPrice;
+                document.getElementById(Ticket + "-unit-price").innerText =  '$' + TicketNewPrice;
                 calculateTotal();
             }
 
             function calculateTotal() {
-                const mobileCount = getInputValue('mobile');
-                const caseCount = getInputValue('case');
+                const FirstClassCount = getInputValue('FirstClass');
+                const EconomyCount = getInputValue('Economy');
 
-                const subTotal = mobileCount * 150 + caseCount * 100;
+                const subTotal = FirstClassCount * 150 + EconomyCount * 100;
                 document.getElementById("sub-total").innerText = '$' + subTotal;
                 const tax = Math.round(subTotal * 0.1);
                 document.getElementById("tax-amount").innerText = '$' + tax;
                 const grandTotal = subTotal + tax;
-                document.getElementById("grand-total").innerText = '$' + grandTotal;
+                document.getElementById("grand-total").innerText =  '$' + grandTotal;
 
             }
-            function getInputValue(product) {
-                const productInput = document.getElementById(product + "-amount");
-                const productCount = parseInt(productInput.value);
-                return productCount;
+            function getInputValue(Ticket) {
+                const TicketInput = document.getElementById(Ticket + "-amount");
+                const TicketCount = parseInt(TicketInput.value);
+                return TicketCount;
 
             }
+            
+
+
         </script>
+       
 
         <!--Thank You-->
 </body>
