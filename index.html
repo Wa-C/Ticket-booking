@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -41,7 +43,7 @@
             <div class="inputs">
                 <div class="input-group">
                     <label" for="">Departure</label>
-                    <input class="inp-style" type="date" name="">
+                        <input class="inp-style" type="date" name="">
                 </div>
                 <div class="input-group">
                     <label for="">Return</label>
@@ -50,21 +52,35 @@
             </div>
             <div class="input-group f-class">
                 <div>
-                    <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <label for="">First Class ($150/Ticket)</label>
+                    <h5>
+                        <input id="mobile-amount" class="inp-style inp-width" type="text" name="" value="0">
+                    </h5>
                 </div>
+                <h5 id="mobile-unit-price">$0</h5>
+                
                 <div class="plus-minus-btn">
-                    <p>+ -</p>
+                    <button onclick="handleProductChange('mobile', true)" class="btn btn-default"><i
+                        class="fas fa-plus"></i></button>
+                <button onclick="handleProductChange('mobile', false)" class="btn btn-default"><i
+                        class="fas fa-minus"></i></button>
                 </div>
             </div>
-            
+
             <div class="input-group f-class">
                 <div>
-                    <label for="">Economy ($100)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <label for="">Economy ($100/Ticket)</label>
+                    <h5>
+                        <input id="case-amount" class="inp-style inp-width" type="text" name="" value="0">
+                    </h5>
                 </div>
+                <h5 id="case-unit-price">$0</h5>
                 <div class="plus-minus-btn">
-                    <p> <span>+</span> <span>-</span> </p>
+                     <button onclick="handleProductChange('case', true)" class="btn btn-default"><i
+                                class="fas fa-plus"></i></button>
+                        <button onclick="handleProductChange('case', false)" class="btn btn-default"><i
+                                class="fas fa-minus"></i></button>
+                    
                 </div>
             </div>
             <div class="calculations">
@@ -73,7 +89,7 @@
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <h5 id ="sub-total">$0</h5>
                     </div>
                 </div>
 
@@ -82,7 +98,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <h5 id ="tax-amount">$0</h5>
                     </div>
                 </div>
                 <hr>
@@ -91,7 +107,7 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <h5 id ="grand-total">$0</h5> 
                     </div>
                 </div>
             </div>
@@ -100,11 +116,58 @@
 
         <div class="booking-content">
             <h1>discover <br> around the world</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise voluptatibus quam</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias
+                veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise
+                voluptatibus quam</p>
         </div>
-    </section>
+        </section>
+        <script>
+            // 2nd evolve by merging 1st evolve of FUNCTIONS
+            function handleProductChange(product, Increasing) {
+                const productAmount = document.getElementById(product + "-amount");
+                const productCount = parseInt(productAmount.value);
+                
+                let productNewAmount = productCount;
+                if (Increasing == true) {
+                    productNewAmount = productCount + 1;
+                }
+                if (Increasing == false && productNewAmount > 0) {
+                    productNewAmount = productCount - 1;
+                }
+                productAmount.value = productNewAmount;
+                
+                let productNewPrice = 0;
+                if (product == 'mobile') {
+                    productNewPrice = productNewAmount * 150;
+                }
+                if (product == 'case') {
+                    productNewPrice = productNewAmount * 100;
+                }
+                document.getElementById(product + "-unit-price").innerText = '$' + productNewPrice;
+                calculateTotal();
+            }
 
-    <!--Thank You-->
+            function calculateTotal() {
+                const mobileCount = getInputValue('mobile');
+                const caseCount = getInputValue('case');
+
+                const subTotal = mobileCount * 150 + caseCount * 100;
+                document.getElementById("sub-total").innerText = '$' + subTotal;
+                const tax = Math.round(subTotal * 0.1);
+                document.getElementById("tax-amount").innerText = '$' + tax;
+                const grandTotal = subTotal + tax;
+                document.getElementById("grand-total").innerText = '$' + grandTotal;
+
+            }
+            function getInputValue(product) {
+                const productInput = document.getElementById(product + "-amount");
+                const productCount = parseInt(productInput.value);
+                return productCount;
+
+            }
+        </script>
+
+        <!--Thank You-->
 </body>
 
 </html>
